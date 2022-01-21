@@ -2,7 +2,7 @@
 Solve today's Wordle using the power of Twitter.
 
 # How does it work?
-It pulls 10k tweets from the last 24 hours using the query "wordle", 
+It pulls up to 10k tweets since the most recent Wordle drop using the query "wordle",
 filters the words in those tweets down to the 5 letter words in the Wordle
 dictionary, then returns the one that occurred the most frequently. 
 

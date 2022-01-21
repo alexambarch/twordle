@@ -3,10 +3,15 @@
             [twordle.twitter.search :refer [search-recent-tweets]]
             [clojure.string :as str]))
 
+;; New Wordle drops at midnight UTC
 (def previous-day-params {:query "wordle"
                           :start_time (->
                                       (java.time.OffsetDateTime/now)
-                                      (.minusHours 24))
+                                      (.withHour 0)
+                                      (.withMinute 0)
+                                      (.withSecond 0)
+                                      (.withOffsetSameLocal
+                                       (java.time.ZoneOffset/UTC)))
                           :max_results 100})
 
 (defn get-next-token
@@ -21,7 +26,7 @@
                  :key-fn keyword))
 
 (defn scrape-wordle-tweets
-  "Search tweets from the last 24 hours containing 'wordle'"
+  "Search tweets since the new Wordle dropped using the query 'wordle'"
   []
   (loop [tweet-json (get-tweet-json previous-day-params)
          tweets (map :text (:data tweet-json))]
